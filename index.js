@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generatePage = require('./utils/generateMarkdown');
+const generatePage = require('./utils/generate-page');
 
 const promptUser = [
     // Manager Name
@@ -197,43 +197,24 @@ const promptUser = [
     // CONSOLE LOG INPUT WAS GENERATED INTO INDEX FILE
 ]
 
-// // Function to generate prompts into the index.html
-// function writeToFile(fileName, data) {
-//     fs.writeFile(fileName, data, (err) => {
-//         if (err)
-//             throw err;
-//         console.log('Thank you for your input! Your team roster has been generated.')
-//     });
-// },
+// Function to generate prompts into the index.html
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, (err) => {
+        if (err)
+            throw err;
+        console.log('Thank you for your input! Your team roster has been generated.')
+    });
+};
 
-// // Function to initialize HTML file that displays formatted team roster
-// function init() {
-//     inquirer.prompt(promptUser)
-//     .then(function (userInput) {
-//         console.log(userInput)
-//         writeToFile("dist/index.html", generatePage(userInput));
-//     });
-// },
+// Function to initialize HTML file that displays formatted team roster
+function init() {
+    inquirer.prompt(promptUser)
+    .then(function (userInput) {
+        console.log(userInput)
+        writeToFile("dist/index.html", generatePage(userInput));
+    });
+};
 
-// // Function call
-// init();
 
-// Position title
-    // {
-    //     type: 'list',
-    //     name: 'position',
-    //     message: 'What is your positions title? (required)',
-    //     choices: 
-    //             ['Intern',
-    //              'Employee',
-    //              'Engineer',
-    //              'Manager'],
-    //     validate: positionInput => {
-    //         if (positionInput) {
-    //             return true;
-    //         } else {
-    //             console.log('This section is required.');
-    //             return false;
-    //         }
-    //     }
-    // },
+init();
+
