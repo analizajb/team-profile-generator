@@ -1,6 +1,17 @@
-const inquirer = require('inquirer');
+// Page creation
+const generatePage = require('./src/generate-page');
+
+// Team
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+const Manager = require('./lib/Manager');
+
+
 const fs = require('fs');
-const generatePage = require('./utils/generate-page');
+const inquirer = require('inquirer');
+
+// Team array
+const team = [];
 
 const promptUser = [
     // Manager Name
