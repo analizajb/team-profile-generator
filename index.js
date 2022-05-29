@@ -9,11 +9,12 @@ const Manager = require('./lib/Manager');
 
 const fs = require('fs');
 const inquirer = require('inquirer');
+const { off } = require('process');
 
 // Team array
 const team = [];
 
-const promptUser = [
+const managerInput = [
     // Manager Name
     {
         type: 'input',
@@ -69,8 +70,24 @@ const promptUser = [
                 return false;
             }
         }
-    },
-    // MENU: Add an engineer/intern/or finish building team?
+    }
+
+    .then(managerInput => {
+        const { name, id, email, officeNum } = managerInput;
+        const manager = new Manager (name, id, email, officeNum);
+
+        teamArray.push(manager);
+        console.log(manager);
+    })
+];
+
+const employeeInput = [
+    console.log(`
+    ================================
+    Let's add the rest of your team!
+    ================================
+    `),
+
     {
         type: 'list',
         name: 'teamBuild',
@@ -88,87 +105,14 @@ const promptUser = [
                 return false;
             }
         }
-    },
-    // IF ENGINEER IS SELECTED 
-    // Engineer Name
-    {
-        type: 'input',
-        name: 'engineerName',
-        message: "Please enter your engineer's name. (required)",
-        validate: engineerName => {
-            if (engineerName) {
-                return true;
-            } else {
-                console.log('This section is required.');
-                return false;
-            }
-        }
-    },
-    // Engineer ID
-    {
-        type: 'input',
-        name: 'engineerId',
-        message: "Please enter your engineer's ID. (required)",
-        validate: engineerId => {
-            if (engineerId) {
-                return true;
-            } else {
-                console.log('This section is required.');
-                return false;
-            }
-        }
-    },
-    // Engineer email
-    {
-        type: 'input',
-        name: 'engineerEmail',
-        message: "Please enter your engineer's email. (required)",
-        validate: engineerEmail => {
-            if (engineerEmail) {
-                return true;
-            } else {
-                console.log('This section is required.');
-                return false;
-            }
-        }
-    },
-    // Engineer GitHub
-    {
-        type: 'input',
-        name: 'engineerGhub',
-        message: "Please enter your engineer's GitHub username. (required)",
-        validate: engineerGhub => {
-            if (engineerGhub) {
-                return true;
-            } else {
-                console.log('This section is required.');
-                return false;
-            }
-        }
     }, 
-    // TO DO: TAKE BACK TO MENU
-    // WHEN INTERN IS SELECTED
-    // Intern Name
+    // Employee Name
     {
         type: 'input',
-        name: 'internName',
-        message: "Please enter your intern's name. (required)",
-        validate: internName => {
-            if (internName) {
-                return true;
-            } else {
-                console.log('This section is required.');
-                return false;
-            }
-        }
-    }, 
-    // Intern ID
-    {
-        type: 'input',
-        name: 'internId',
-        message: "Please enter your intern's ID. (required)",
-        validate: internId => {
-            if (internId) {
+        name: 'empName',
+        message: "Please enter your employee's name. (required)",
+        validate: empName => {
+            if (empName) {
                 return true;
             } else {
                 console.log('This section is required.');
@@ -176,13 +120,13 @@ const promptUser = [
             }
         }
     },
-    // Intern email
+    // Employee ID
     {
         type: 'input',
-        name: 'internEmail',
-        message: "Please enter your intern's email. (required)",
-        validate: internEmail => {
-            if (internEmail) {
+        name: 'empId',
+        message: "Please enter your employee's ID. (required)",
+        validate: empId => {
+            if (empId) {
                 return true;
             } else {
                 console.log('This section is required.');
@@ -190,13 +134,13 @@ const promptUser = [
             }
         }
     },
-    // Intern School
+    // Employee email
     {
         type: 'input',
-        name: 'internEdu',
-        message: "Please enter your intern's school name. (required)",
-        validate: internEdu => {
-            if (internEdu) {
+        name: 'empEmail',
+        message: "Please enter your employee's email. (required)",
+        validate: empEmail => {
+            if (empEmail) {
                 return true;
             } else {
                 console.log('This section is required.');
@@ -204,9 +148,40 @@ const promptUser = [
             }
         }
     },
-    // TAKE USER BACK TO MENU
-    // CONSOLE LOG INPUT WAS GENERATED INTO INDEX FILE
-]
+    // Employee GitHub
+    {
+        type: 'input',
+        name: 'empGhub',
+        message: "Please enter your employee's GitHub username. (required)",
+        validate: empGhub => {
+            if (empGhub) {
+                return true;
+            } else {
+                console.log('This section is required.');
+                return false;
+            }
+        }
+    },
+    // Employee School
+    {
+        type: 'input',
+        name: 'empEdu',
+        message: "Please enter your employee's school name. (required)",
+        validate: empEdu => {
+            if (empEdu) {
+                return true;
+            } else {
+                console.log('This section is required.');
+                return false;
+            }
+        }
+    },
+    // Allowing user to add more to their team
+    {
+        type: 'confirm',
+        
+    }
+];
 
 // Function to generate prompts into the index.html
 function writeToFile(fileName, data) {
