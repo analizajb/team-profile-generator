@@ -48,10 +48,10 @@ const promptUser = [
     // Manager office number
     {
         type: 'input',
-        name: 'managerNum',
+        name: 'officeNum',
         message: "Please enter your team managers office number. (required)",
-        validate: managerNumInput => {
-            if (managerNumInput) {
+        validate:officeNumInput => {
+            if (officeNumInput) {
                 return true;
             } else {
                 console.log('This section is required.');
